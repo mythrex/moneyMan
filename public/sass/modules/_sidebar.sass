@@ -1,0 +1,50 @@
+.sidebar
+  display: none
+
+@media (min-width: 768px)
+  .sidebar
+    background: $primary-color
+    width: 260px
+    display: flex
+    flex-direction: column
+
+
+  .sidebar-wrapper
+    flex: 1
+
+    .logo
+      font-size: 2em
+      text-align: center
+      border-bottom: 1px solid white
+      margin-bottom: 10px
+      margin-top: 10px
+
+    .nav
+      flex-direction: column
+
+      li
+        text-align: center
+        padding: 5px
+
+        &:hover
+          background: $accent-color-light
+
+        a:hover
+          text-decoration: none
+
+      .active
+        background: $primary-color-dark
+        border-right: 15px solid $accent-color
+
+  .sidebar-footer
+    height: auto
+    text-align: center
+    padding: 10px
+    padding-bottom: 20px
+    background: $primary-color-dark
+
+  a
+    color: white
+
+    &:hover
+      text-decoration: none
