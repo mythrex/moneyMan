@@ -1,8 +1,41 @@
+//modules
 const express = require('express');
-const db = require('./db.js');
-const exphbs = require('express-hbs');
 const app = express();
-var port = process.env.PORT || 3000;
+const exphbs = require('express-hbs');
+const dotenv = require('dotenv').config();
+const bp = require('body-parser');
+const cp = require('cookie-parser');
+const session = require('express-session');
+const pgSession = require('connect-pg-simple')(session);
+//local config files
+const db = require('./config/db.js');
+const passport = require('./config/passport.js');
+
+//routes
+const login = require('./routes/login.js');
+const categories = require('./routes/categories.js');
+const expense = require('./routes/expense.js');
+
+const port = process.env.PORT;
+
+//body parser
+app.use(bp.urlencoded({extended: false}));
+app.use(bp.json());
+//cookie-parser
+app.use(cp(process.env.CP_SECRET));
+//express session
+app.use(session({
+	store: new pgSession({
+		conString : 'pg://' + process.env.DB_USER + ':' + process.env.DB_PASS + '@' + process.env.DB_HOST + '/' + process.env.DB_DB,
+	}),
+	secret: process.env.SESSION_SECRET,
+	resave: false,
+	saveUninitialized: false,
+	cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
+}));
+//passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/',express.static(__dirname + '/public'));
 //setting up hbs engine
@@ -15,9 +48,12 @@ app.set('view engine','hbs');
 app.set('views','views');
 //TODO Do some stuff here
 
-// app.get('path', (req, res) => {
-//
-// });
+app.use(login,categories,expense);
+
+app.get('/logouts', function(req, res){
+  req.logout();
+  res.redirect(200,'/signin');
+});
 
 app.listen(port, function () {
   console.log(`Server Starts on ${port}`);
