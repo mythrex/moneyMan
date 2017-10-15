@@ -1,122 +1,33 @@
 const express = require('express');
 const router = express.Router();
-const EXPENSES = require('../models/expense.js');
-const CATEGORIES = require('../models/categories.js');
-const Op = require('sequelize').Op;
 
-//for api testing for producstion replace it with req.user.network_id
-const userId = "1585338691532903";
+const controller = require('../controllers/expense.js');
 
-function queryGen(req){
-	let q = {
-		authenticationNetworkId: userId
-	};
-	
-	let categId = req.query.categoryId;
-	if(categId){
-		q.categoryId = categId;
-	}
 
-	
-	let minAmount = req.query.minAmount;
-	if(minAmount){
-		if(!q.amount) q.amount = {};
-		q.amount[Op.gte] = minAmount;
-	}
+//function to get expenses by category id,tags,desc,min amount,max amount, date range, specific date
+router.get('/u/expenses',controller.getExpense);
 
-	let maxAmount = req.query.maxAmount;
-	if(maxAmount){
-		if(!q.amount) q.amount = {};
-		q.amount[Op.lte] = maxAmount;
-	}
+//function to get total amount spent
+router.get('/u/expenses/total/',controller.getTotalExpense);
 
-	let tags = req.query.tags;
-	if(tags){
-		q.tags = tags
-	}
+//function to get amount spent as per category or get by categoryId
+router.get('/u/expenses/total/group/category',controller.getTotalExpensePerCategory);
 
-	
-	let minDate = req.query.minDate;
-	if(minDate){
-		if(!q.date) q.date = {};
-		q.date[Op.gte] = new Date(minDate);
-	}
+//function to get total-expense as per months
+router.get('/u/expenses/total/group/date', controller.getTotalExpensePerMonth);
 
-	let maxDate = req.query.maxDate;
-	if(maxDate){
-		if(!q.date) q.date = {};
-		q.date[Op.lte] = new Date(maxDate);
-	}
-	return q;
-}
+//function to get expense details as per day/month/year
+router.get('/u/expenses/:date_part/:expense_on',controller.getExpensesByDatePart);
 
-router.get('/u/expenses',(req,res)=>{
-	let q = queryGen(req);
-	// console.log(q);
-	EXPENSES.findAll({
-		where: q,
-		include: [CATEGORIES]
-	}).then((arr)=>{
-		res.status(200).send(arr);
-	}).catch((err)=>{
-		throw err;
-	})
-});
+//create an expense
+router.post('/u/expenses', controller.createExpense);
 
-router.post('/u/expenses',(req,res)=>{
-	EXPENSES.create({
-		name: req.body.name,
-		desc: req.body.desc,
-		amount: req.body.amount,
-		categoryId: req.body.categoryId,
-		date: req.body.date,
-		expense: req.body.expense,
-		tags: req.body.tags,
-		authenticationNetworkId: userId,
-	}).then((result)=>{
-		console.log(result);
-		res.status(200).send(result);
-	}).catch((err)=>{
-		throw err;
-	})
-});
+//update the expense
+router.put('/u/expenses/:id', controller.updateExpense);
 
-router.put('/u/expenses/:id',(req,res)=>{
-	// console.log('***req.body***',req.body);
-	EXPENSES.update({
-		name: req.body.name,
-		desc: req.body.desc,
-		amount: req.body.amount,
-		categoryId: req.body.categoryId,
-		expense: req.body.expense,
-		tags: req.body.tags,
-		date: req.body.date,
-	},{
-		where: {
-			id: req.params.id
-		}
-	}).then((result)=>{
-		// console.log('***result***',result);
-		res.status(200).send({success: true});
-	}).catch((err)=>{
-		throw err;
-	})
-});
+//delete an expense by Id
+router.delete('/u/expenses/:id', controller.deleteExpense);
 
-router.delete('/u/expenses/:id',(req,res)=>{
-	EXPENSES.destroy({
-		where: {
-			id: req.params.id
-		}
-	}).then((result)=>{
-		if (result) {
-			res.status(200).send({success: true});
-		}else{
-			res.status(404).send({success: false});
-		}
-	}).catch((err)=>{
-		throw err;
-	})
-});
+
 
 module.exports = router;
