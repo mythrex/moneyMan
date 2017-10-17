@@ -1,6 +1,7 @@
 const EXPENSES = require('../models/expense.js');
 const CATEGORIES = require('../models/categories.js');
 const Sequelize = require('sequelize');
+const dateManupulation = require('./dateManupulation.js');
 const Op = Sequelize.Op;
 
 //for api testing for producstion replace it with req.user.network_id
@@ -53,16 +54,26 @@ function queryGen(req){
 		q.date = date;
 	}
 
+	let expense = req.query.expense;
+	if(expense){
+		q.expense = expense;
+	}
 	return q;
 }
 
 //function to get expenses by category id,tags,desc,min amount,max amount, date range, specific date
 module.exports.getExpense = (req,res)=>{
 	let q = queryGen(req);
-	// console.log(q);
+
+	let order = [['date','DESC']];
+	if(req.query.order){
+		order = [[req.query.order,'DESC']]
+	}
+
 	EXPENSES.findAll({
 		where: q,
-		include: [CATEGORIES]
+		include: [CATEGORIES],
+		order: order
 	}).then((arr)=>{
 		res.status(200).send(arr);
 	}).catch((err)=>{
@@ -76,6 +87,7 @@ module.exports.getTotalExpense = (req,res)=>{
 	EXPENSES.sum('amount',{
 		where: {
 			authenticationNetworkId: userId,
+			expense: true,
 		}
 	}).then((sum)=>{
 		res.send(''+sum);
@@ -89,6 +101,7 @@ module.exports.getTotalExpense = (req,res)=>{
 module.exports.getTotalExpensePerCategory = (req,res)=>{
 	let q = {
 		authenticationNetworkId: userId,
+		expense: true,
 	};
 	let categoryId = req.query.categoryId;
 	if(categoryId){
@@ -112,13 +125,14 @@ module.exports.getTotalExpensePerMonth = (req,res)=>{
 	let date = new Date();
 	let year = date.getYear() + 1900;
 	EXPENSES.findAll({
-		attributes: [[Sequelize.fn('sum',Sequelize.col('amount')),'sum'],[Sequelize.fn('date_part', 'month', Sequelize.col('date')),'month']],
-  		group: [Sequelize.fn('date_part', 'month', Sequelize.col('date'))],
+		attributes: [[Sequelize.fn('sum',Sequelize.col('amount')),'sum'],[Sequelize.fn('date_part', 'month', Sequelize.col('date')),'month'],[Sequelize.fn('date_part', 'year', Sequelize.col('date')),'year']],
+  		group: [Sequelize.fn('date_part', 'month', Sequelize.col('date')),Sequelize.fn('date_part', 'year', Sequelize.col('date'))],
   		where: {
   			authenticationNetworkId: userId,
-  			where: Sequelize.where(Sequelize.fn('date_part', 'year', Sequelize.col('date')),{[Op.eq] : year})
+  			expense: true,
+  			// where: Sequelize.where(Sequelize.fn('date_part', 'year', Sequelize.col('date')),{[Op.eq] : year})
   		},
-  		order: Sequelize.col('month')
+  		order: [[Sequelize.col('year'),'DESC'],[Sequelize.col('month'),'DESC']]
 	}).then((result)=>{
 		res.send(result);
 	}).catch((err)=>{
@@ -126,15 +140,137 @@ module.exports.getTotalExpensePerMonth = (req,res)=>{
 	})
 };
 
-//function to get expense details as per day/month/year
+//function to get expense details as per day/month/year with previous day/month/year
+/**
+	if we supply year = 2017 then result[n-1] will contain previous year data
+**/
 module.exports.getExpensesByDatePart = (req,res)=>{
 	EXPENSES.findAll({
 		where: {
 			where: Sequelize.where(Sequelize.fn('date_part',req.params.date_part,Sequelize.col('date')),{[Op.eq] : req.params.expense_on}),
 			authenticationNetworkId: userId
-		}
+		},
+	}).then((result)=>{
+
+		EXPENSES.findAll({
+		where: {
+			where: Sequelize.where(Sequelize.fn('date_part',req.params.date_part,Sequelize.col('date')),{[Op.eq] : req.params.expense_on - 1}),
+			authenticationNetworkId: userId
+			},
+		}).then((prevData)=>{
+			result.push({prev: prevData});
+			res.send(result)
+		}).catch((err)=>{
+			throw err;
+		})
+
+	}).catch((err)=>{
+		throw err;
+	})
+};
+
+//function to get expensesOfLastSixMonths
+module.exports.getTotalExpenseLastSixMonths = (req, res)=>{
+	let cur_date = new Date();
+	let prev_six_month_date = dateManupulation.addMonth(cur_date, -6);
+	EXPENSES.findAll({
+		attributes: [[Sequelize.fn('sum',Sequelize.col('amount')),'sum'],[Sequelize.fn('date_part', 'month', Sequelize.col('date')),'month'],[Sequelize.fn('date_part', 'year', Sequelize.col('date')),'year']],
+		where: {
+			date: {
+				[Op.lte] : cur_date,
+				[Op.gte] : prev_six_month_date
+			},
+			authenticationNetworkId: userId,
+			expense: true
+		},
+		order: [[Sequelize.col('year'),'DESC'],[Sequelize.col('month'),'DESC']],
+		group: [Sequelize.fn('date_part', 'month', Sequelize.col('date')),Sequelize.fn('date_part', 'year', Sequelize.col('date'))],
 	}).then((result)=>{
 		res.send(result);
+	}).catch((err)=>{
+		throw err;
+	});
+};
+
+//function to get total spend of this week
+module.exports.getTotalExpenseThisWeek = (req, res)=>{
+	var cur_date;
+	if(req.query.date){
+		cur_date = new Date(req.query.date);
+		console.log('req.query.date',new Date(req.query.date));
+	}else{
+		cur_date = new Date();
+	}
+	var sun_date = dateManupulation.addDay(cur_date, -cur_date.getDay());
+	var prev_sun_date = dateManupulation.addDay(sun_date, -7);
+	EXPENSES.sum('amount',{
+		where: {
+			expense: true,
+			authenticationNetworkId: userId,
+			date: {
+				[Op.gte] : sun_date,
+				[Op.lte] : cur_date
+			}
+		}
+	}).then((sum)=>{
+		EXPENSES.sum('amount',{
+			where: {
+				expense: true,
+				authenticationNetworkId: userId,
+				date: {
+					[Op.gte] : prev_sun_date,
+					[Op.lt] : sun_date
+				}
+			}
+		}).then((prevSum)=>{
+			console.log(sum,prevSum);
+			if(prevSum){
+				if(sum){
+					res.send([{sum: sum},{prevSum: prevSum}]);
+				}
+				else{
+					res.send([{sum: 0},{prevSum: prevSum}]);
+				}
+			}
+			else{
+				if(sum){
+					res.send([{sum: sum},{prevSum: 0}]);
+				}
+				else{
+					res.send([{sum: 0},{prevSum: 0}]);
+				}
+			}
+		}).catch((err)=>{
+			throw err;
+		})
+	}).catch((err)=>{
+		throw err;
+	})
+};
+
+module.exports.getTotalExpenseWeekdays = (req, res)=>{
+	var cur_date;
+	if(req.query.date){
+		cur_date = new Date(req.query.date);
+		console.log('req.query.date',new Date(req.query.date));
+	}else{
+		cur_date = new Date();
+	}
+	var sun_date = dateManupulation.addDay(cur_date, -cur_date.getDay());
+	EXPENSES.findAll({
+		attributes: [[Sequelize.fn('sum',Sequelize.col('amount')),'sum'],'date'],
+		where: {
+			date: {
+				[Op.gte] : sun_date,
+				[Op.lte] : cur_date,
+			},
+			authenticationNetworkId: userId,
+			expense: true,
+		},
+		group: ['date'],
+		order: ['date']
+	}).then((result)=>{
+		res.send(result)
 	}).catch((err)=>{
 		throw err;
 	})

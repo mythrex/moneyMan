@@ -16,6 +16,15 @@ router.get('/u/expenses/total/group/category',controller.getTotalExpensePerCateg
 //function to get total-expense as per months
 router.get('/u/expenses/total/group/date', controller.getTotalExpensePerMonth);
 
+//get total expenses of last six months
+router.get('/u/expenses/total/lastSixMonths',controller.getTotalExpenseLastSixMonths);
+
+//function to get total spend of this week
+router.get('/u/expenses/total/thisweek',controller.getTotalExpenseThisWeek);
+
+//function to get total spend of this week
+router.get('/u/expenses/total/weekdays',controller.getTotalExpenseWeekdays);
+
 //function to get expense details as per day/month/year
 router.get('/u/expenses/:date_part/:expense_on',controller.getExpensesByDatePart);
 
