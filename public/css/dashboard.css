@@ -58,6 +58,121 @@
   .user-details .sidebar-profile-name {
     color: #1b9aaa; }
 
+.expense-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  padding: 5px;
+  max-height: 600px;
+  overflow: auto; }
+
+.expense-item {
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  font-size: 1.1em; }
+  .expense-item:nth-child(2n) {
+    background: white; }
+  .expense-item:nth-child(2n+1) {
+    background: #f1f1f1; }
+  .expense-item[data-expense=false] {
+    color: #757575; }
+  .expense-item .col-12 {
+    margin: 5px;
+    margin-bottom: 10px; }
+  .expense-item .col-12:nth-child(1) {
+    display: flex;
+    font-size: 1.15em; }
+  .expense-item .col-12:nth-child(2) {
+    display: flex; }
+  .expense-item .col-12:nth-child(3) {
+    margin-bottom: 5px;
+    position: relative;
+    bottom: 0; }
+  .expense-item .expense-category {
+    flex: 2;
+    font-size: 1.3em; }
+  .expense-item .expense-name {
+    flex: 6; }
+  .expense-item .expense-icons {
+    color: #757575;
+    flex: 1;
+    cursor: pointer; }
+    .expense-item .expense-icons:hover.fa-trash {
+      color: #FF3636; }
+    .expense-item .expense-icons:hover.fa-pencil {
+      color: #1b9aaa; }
+  .expense-item .expense-desc {
+    flex: 4; }
+  .expense-item .expense-amount {
+    flex: 1;
+    font-size: 1.3em;
+    color: #FF3636; }
+
+.expense-category[data-category=Bill]:before {
+  color: #4caf50;
+  content: "\f249";
+  font-family: "FontAwesome"; }
+
+.expense-category[data-category=Borrow]:before {
+  color: #757575;
+  font-family: "FontAwesome";
+  content: "\f060"; }
+
+.expense-category[data-category=EMI]:before {
+  color: #9e9e9e;
+  content: "EMI"; }
+
+.expense-category[data-category=Entertainment]:before {
+  color: #3f51b5;
+  font-family: "FontAwesome";
+  content: "\f008"; }
+
+.expense-category[data-category="Food & Drinks"]:before {
+  color: #9c27b0;
+  font-family: "FontAwesome";
+  content: "\f0f5"; }
+
+.expense-category[data-category=Fuel]:before {
+  color: #ff9800;
+  font-family: "FontAwesome";
+  content: "\f1ba"; }
+
+.expense-category[data-category=Groceries]:before {
+  color: #8bc34a;
+  font-family: "FontAwesome";
+  content: "\f094"; }
+
+.expense-category[data-category=Health]:before {
+  color: #ffeb3b;
+  font-family: "FontAwesome";
+  content: "\f004"; }
+
+.expense-category[data-category=Investment]:before {
+  color: #212121;
+  font-family: "FontAwesome";
+  content: "\f19c"; }
+
+.expense-category[data-category=Shopping]:before {
+  color: #2196f3;
+  font-family: "FontAwesome";
+  content: "\f07a"; }
+
+.expense-category[data-category=Transfer]:before {
+  color: #673ab7;
+  font-family: "FontAwesome";
+  content: "\f0ec"; }
+
+.expense-category[data-category=Travel]:before {
+  color: #e91e63;
+  font-family: "FontAwesome";
+  content: "\f0b1"; }
+
+.expense-category[data-category=Other]:before {
+  color: #ff5722;
+  font-family: "FontAwesome";
+  content: "\f059"; }
+
 .wrapper {
   height: 100%; }
 

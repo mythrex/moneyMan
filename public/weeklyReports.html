@@ -108,12 +108,12 @@
 
 
                 <ul class="nav">
-                  <li class="active">
+                  <li>
                     <a href="dashboard.html">
                       <p>Dashboard</p>
                     </a>
                   </li>
-                  <li>
+                  <li class="active">
                     <a href="weeklyReports.html">
                       <p>Weekly Reports</p>
                     </a>
@@ -127,57 +127,56 @@
             </div>
 
             <div class="content">
-
               <div class="container-fluid">
+              
+                <div class="row">
+                  <div class="col-12 col-sm-6 col-md-5 col-lg-4">
+                  <div class="card">
+                    <div class="card-body">
+                      
+                    </div>
+                  </div>
+                </div><!-- col-12 col-md-6 -->
 
-                  <div class="row">
+                
+                  
                     
-                    
-
-                  </div><!--row-->
-
-                  <div class="row">
-
-                    <div class="col-md-12 col-lg-6">
+                    <div class="col-12 col-sm-6 col-md-5 col-lg-4">
                       <div class="card">
                         <div class="card-body">
                           
                         </div>
                       </div>
-                    </div><!--col-12-->
-
-                    <div class="col-md-12 col-lg-6">
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-5 col-lg-4">
                       <div class="card">
                         <div class="card-body">
                           
                         </div>
                       </div>
-                    </div><!--col-12-->
+                    </div>
 
-                  </div><!-- /.row -->
+                </div><!-- row -->
 
-                  <div class="row">
+                <div class="row">
 
-                    <div class="col-md-12 col-lg-6">
-                      <div class="card">
-                        <div class="card-header">
-                          Recent Spends
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                              <div class="col-12">
-                                <button class="pull-right btn btn-primary btn-icon  btn-icon-mini btn-round" id="add-expense" data-toggle="tooltip" data-placement="top" title="Add an expense">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                              </div>
-                            </div>
-                            
-                            <!--expenses-->
-                            <div class="row">
+                  <div class="col-md-12 col-lg-6">
+                    <div class="card">
+                      <div class="card-header card-inverse bg-success">
+                        <span>Category wise Ananlysis</span>
+                      </div>
+                      <div class="card-body">
+                        
+                      </div>
+                    </div>
+                  </div>
 
-                              <div class="col-12">
-                              <ul class="expense-list">
 
+                  <div class="col-md-12 col-lg-6">
+                    <div class="card">
+                      <div class="card-header">Expenses</div>
+                      <div class="card-body">
+                        <ul class="expense-list">
                                 <li class="expense-item" data-expense="false" data-id="1">
                                   <div class="col-12">
                                     <span data-category="Bill" class="fa fa-star expense-category"></span>
@@ -303,168 +302,19 @@
                                     </p>
                                   </div>                                  
                                 </li><!--expense-list-item-->
-                                
-                                <li class="expense-item" data-expense="true" data-id="1">
-                                  <div class="col-12">
-                                    <span data-category="Health" class="fa fa-star expense-category"></span>
-                                    <span class="expense-name">ABC</span>
-                                    <span data-toggle="tooltip" data-placement="top" title="edit this expense" class="fa fa-pencil expense-icons"></span>
-                                    <span data-toggle="tooltip" data-placement="top" title="remove this expense" class="fa fa-trash expense-icons"></span>
-                                  </div>
-                                  <div class="col-12">
-                                    <span class="expense-desc text-muted">Description</span> 
-                                    <span class="fa fa-inr expense-amount">452</span>
-                                  </div>
-                                  <div class="col-12 expense-item-footer">
-                                    <p class="text-muted expense-date">
-                                      19-04-2017
-                                    </p>
-                                  </div>                                  
-                                </li><!--expense-list-item-->
-
-                                <li class="expense-item" data-expense="true" data-id="1">
-                                  <div class="col-12">
-                                    <span data-category="Investment" class="fa fa-star expense-category"></span>
-                                    <span class="expense-name">ABC</span>
-                                    <span data-toggle="tooltip" data-placement="top" title="edit this expense" class="fa fa-pencil expense-icons"></span>
-                                    <span data-toggle="tooltip" data-placement="top" title="remove this expense" class="fa fa-trash expense-icons"></span>
-                                  </div>
-                                  <div class="col-12">
-                                    <span class="expense-desc text-muted">Description</span> 
-                                    <span class="fa fa-inr expense-amount">452</span>
-                                  </div>
-                                  <div class="col-12 expense-item-footer">
-                                    <p class="text-muted expense-date">
-                                      19-04-2017
-                                    </p>
-                                  </div>                                  
-                                </li><!--expense-list-item-->
-
-                                <li class="expense-item" data-expense="true" data-id="1">
-                                  <div class="col-12">
-                                    <span data-category="Shopping" class="fa fa-star expense-category"></span>
-                                    <span class="expense-name">ABC</span>
-                                    <span data-toggle="tooltip" data-placement="top" title="edit this expense" class="fa fa-pencil expense-icons"></span>
-                                    <span data-toggle="tooltip" data-placement="top" title="remove this expense" class="fa fa-trash expense-icons"></span>
-                                  </div>
-                                  <div class="col-12">
-                                    <span class="expense-desc text-muted">Description</span> 
-                                    <span class="fa fa-inr expense-amount">452</span>
-                                  </div>
-                                  <div class="col-12 expense-item-footer">
-                                    <p class="text-muted expense-date">
-                                      19-04-2017
-                                    </p>
-                                  </div>                                  
-                                </li><!--expense-list-item-->
-
-                                <li class="expense-item" data-expense="true" data-id="1">
-                                  <div class="col-12">
-                                    <span data-category="Transfer" class="fa fa-star expense-category"></span>
-                                    <span class="expense-name">ABC</span>
-                                    <span data-toggle="tooltip" data-placement="top" title="edit this expense" class="fa fa-pencil expense-icons"></span>
-                                    <span data-toggle="tooltip" data-placement="top" title="remove this expense" class="fa fa-trash expense-icons"></span>
-                                  </div>
-                                  <div class="col-12">
-                                    <span class="expense-desc text-muted">Description</span> 
-                                    <span class="fa fa-inr expense-amount">452</span>
-                                  </div>
-                                  <div class="col-12 expense-item-footer">
-                                    <p class="text-muted expense-date">
-                                      19-04-2017
-                                    </p>
-                                  </div>                                  
-                                </li><!--expense-list-item-->
-
-                                <li class="expense-item" data-expense="true" data-id="1">
-                                  <div class="col-12">
-                                    <span data-category="Travel" class="fa fa-star expense-category"></span>
-                                    <span class="expense-name">ABC</span>
-                                    <span data-toggle="tooltip" data-placement="top" title="edit this expense" class="fa fa-pencil expense-icons"></span>
-                                    <span data-toggle="tooltip" data-placement="top" title="remove this expense" class="fa fa-trash expense-icons"></span>
-                                  </div>
-                                  <div class="col-12">
-                                    <span class="expense-desc text-muted">Description</span> 
-                                    <span class="fa fa-inr expense-amount">452</span>
-                                  </div>
-                                  <div class="col-12 expense-item-footer">
-                                    <p class="text-muted expense-date">
-                                      19-04-2017
-                                    </p>
-                                  </div>                                  
-                                </li><!--expense-list-item-->
-
-                                <li class="expense-item" data-expense="true" data-id="1">
-                                  <div class="col-12">
-                                    <span data-category="Other" class="fa fa-star expense-category"></span>
-                                    <span class="expense-name">ABC</span>
-                                    <span data-toggle="tooltip" data-placement="top" title="edit this expense" class="fa fa-pencil expense-icons"></span>
-                                    <span data-toggle="tooltip" data-placement="top" title="remove this expense" class="fa fa-trash expense-icons"></span>
-                                  </div>
-                                  <div class="col-12">
-                                    <span class="expense-desc text-muted">Description</span> 
-                                    <span class="fa fa-inr expense-amount">452</span>
-                                  </div>
-                                  <div class="col-12 expense-item-footer">
-                                    <p class="text-muted expense-date">
-                                      19-04-2017
-                                    </p>
-                                  </div>                                  
-                                </li><!--expense-list-item-->
-
-
                               </ul>
-
-                            </div>
-                        </div>
                       </div>
                     </div>
-
-                  </div><!-- /col-md-12 -->
-
-                  <div class="col-md-12 col-lg-6">
-                    <div class="row">
-                      <div class="col-12 col-sm-6">
-                      <div class="card">
-                        <div class="card-header card-inverse bg-primary">Today's Spends</div>
-                        <div class="card-body">
-                          <h2><span class="fa fa-inr text-primary"> 345</span></h2>
-                          <p class="text-muted">has been spent today.</p>
-                        </div>
-                      </div>
-                    </div><!--col-12-->
-
-                    <div class="col-12 col-sm-6">
-                      <div class="card">
-                        <div class="card-header card-inverse bg-warning">Spends this month.</div>
-                        <div class="card-body">
-                          <h2 class="text-danger"><span class="fa fa-inr"></span> 9.8k</h2>
-                          <p class="text-muted">has been spent this month.</p>
-                        </div>
-                      </div>
-                    </div><!--col-12-->
-
-                    <div class="col-12 col-sm-6">
-                      <div class="card">
-                        <div class="card-header card-inverse bg-info">Up or down</div>
-                        <div class="card-body">
-                          <p class="text-muted">Spends</p>
-                          <h2><span class="fa fa-arrow-up text-danger"></span> by <span class="text-danger">200%</span></h2><span class="text-muted">as compared to last week.</span>
-                        </div>
-                      </div>
-                    </div><!--col-12-->
-                    </div><!-- /.row -->
                   </div>
 
-              </div><!-- row -->
+                </div><!-- /.row -->
 
-  
-              
-          </div>
-          
-  
+            </div>
+          </div><!--content-->
 
-    </div>
+
+      </div><!--main-panel-->
+    </div><!-- wrapper -->
   </body>
   
   <script src="/js/common.js" charset="utf-8"></script>

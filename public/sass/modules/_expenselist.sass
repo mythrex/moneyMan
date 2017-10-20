@@ -1,0 +1,113 @@
+.expense-list
+	list-style: none
+	padding: 0
+	margin: 0
+	padding: 5px
+	max-height: 600px
+	overflow: auto
+
+.expense-item
+	height: 100%
+	width: 100%
+	padding: 10px
+	font-size: 1.1em
+	&:nth-child(2n)
+		background: white
+	&:nth-child(2n+1)
+		background: #f1f1f1
+	&[data-expense=false]
+		color: $secondary-text-color
+	
+	.col-12
+		margin: 5px
+		margin-bottom: 10px
+
+	.col-12:nth-child(1)
+		display: flex
+		font-size: 1.15em
+
+	.col-12:nth-child(2)
+		display: flex
+
+	.col-12:nth-child(3)
+		margin-bottom: 5px
+		position: relative
+		bottom: 0
+
+	.expense-category
+		flex: 2
+		font-size: 1.3em
+
+	.expense-name
+		flex: 6
+
+	.expense-icons
+		color: $secondary-text-color
+		flex: 1
+		cursor: pointer
+
+		&:hover.fa-trash
+			color: $danger
+
+		&:hover.fa-pencil
+			color: $primary-color
+
+	.expense-desc
+		flex: 4
+	.expense-amount
+		flex: 1
+		font-size: 1.3em
+		color: $danger
+
+.expense-category[data-category=Bill]:before
+	color: rgb(76, 175, 80)
+	content: "\f249"
+	font-family: "FontAwesome"
+
+.expense-category[data-category=Borrow]:before
+	color: $secondary-text-color
+	font-family: "FontAwesome"
+	content: "\f060"
+.expense-category[data-category=EMI]:before
+	color: rgb(158, 158, 158)
+	content: "EMI"
+.expense-category[data-category=Entertainment]:before
+	color: rgb(63, 81, 181)
+	font-family: "FontAwesome"
+	content: "\f008"
+.expense-category[data-category="Food & Drinks"]:before
+	color: rgb(156, 39, 176)
+	font-family: "FontAwesome"
+	content: "\f0f5"
+.expense-category[data-category=Fuel]:before
+	color: rgb(255, 152, 0)
+	font-family: "FontAwesome"
+	content: "\f1ba"
+.expense-category[data-category=Groceries]:before
+	color: rgb(139, 195, 74)
+	font-family: "FontAwesome"
+	content: "\f094"
+.expense-category[data-category=Health]:before
+	color: rgb(255, 235, 59)
+	font-family: "FontAwesome"
+	content: "\f004"
+.expense-category[data-category=Investment]:before
+	color: $primary-text-color
+	font-family: "FontAwesome"
+	content: "\f19c"
+.expense-category[data-category=Shopping]:before
+	color: rgb(33, 150, 243)
+	font-family: "FontAwesome"
+	content: "\f07a"
+.expense-category[data-category=Transfer]:before
+	color: rgb(103, 58, 183)
+	font-family: "FontAwesome"
+	content: "\f0ec"
+.expense-category[data-category=Travel]:before
+	color: rgb(233, 30, 99)
+	font-family: "FontAwesome"
+	content: "\f0b1"
+.expense-category[data-category=Other]:before
+	color: rgb(255, 87, 34)
+	font-family: "FontAwesome"
+	content: "\f059"
