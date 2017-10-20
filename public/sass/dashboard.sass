@@ -1,14 +1,12 @@
 @import "palette"
 //for sidebar
 @import "modules/sidebar"
-//for message button
-@import "modules/messages"
-
+@import "./modules/expenselist.sass"
 .wrapper
-  height: 100vh
+  height: 100%
 
 .main-panel
-  padding-top: 57px
+  padding-top: 70px
   height: 100%
   width: 100%
   display: flex
@@ -19,3 +17,7 @@
     padding: 10px
     background-color: #f1f1f1
     overflow-y: auto
+
+#add-expense
+  position: relative
+  top: -43.9px

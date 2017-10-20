@@ -13,8 +13,23 @@ gulp.task('sass',() => {
 		.pipe(livereload());
 })
 
+gulp.task('scss',() => {
+	return gulp.src('public/sass/**/*.scss')
+		.pipe(plumber())
+    	.pipe(sass())
+    	.pipe(gulp.dest('public/css'))
+		.pipe(livereload());
+})
+
 gulp.task('publicjs',() => {
 	return gulp.src('public/js/**/*.js')
+		.pipe(plumber())
+		.pipe(livereload());
+})
+
+//for html
+gulp.task('html',() => {
+	return gulp.src('public/**/*.html')
 		.pipe(plumber())
 		.pipe(livereload());
 })
@@ -22,8 +37,7 @@ gulp.task('publicjs',() => {
 //for views
 gulp.task('views',() => {
 	return gulp.src('views/**/*.hbs')
-		.pipe(plumber())
-		.pipe(livereload());
+		.pipe(plumber());
 })
 
 //nodemon for restarting server
@@ -37,8 +51,10 @@ gulp.task('server',() => {
 
 //watch task
 gulp.task('watch',() => {
-	// livereload.listen();
+	livereload.listen();
 	gulp.watch('public/sass/**/*.sass',['sass']);
+	gulp.watch('public/sass/**/*.scss',['scss']);
+	gulp.watch('public/**/*.html',['html']);
   	gulp.watch('public/**/*.js',['publicjs']);
 	gulp.watch('views/**/*.hbs',['views']);
 })

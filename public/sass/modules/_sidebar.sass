@@ -1,23 +1,19 @@
 .sidebar
   display: none
+  font-family: "Open Sans"
 
 @media (min-width: 768px)
   .sidebar
-    background: $primary-color
+    background: $sidebar-color
     width: 260px
     display: flex
     flex-direction: column
+    color: $primary-text-color
+    box-shadow: 10px 10px 10px $divider-color
 
 
   .sidebar-wrapper
     flex: 1
-
-    .logo
-      font-size: 2em
-      text-align: center
-      border-bottom: 1px solid white
-      margin-bottom: 10px
-      margin-top: 10px
 
     .nav
       flex-direction: column
@@ -27,24 +23,51 @@
         padding: 5px
 
         &:hover
-          background: $accent-color-light
+          background: $primary-color
+          p
+            color: $primary-color-text
+
+        a
+          display: inline-block
+          height: 100%
+          width: 100%
+          margin: 0
+          color: $secondary-text-color
 
         a:hover
           text-decoration: none
 
       .active
-        background: $primary-color-dark
-        border-right: 15px solid $accent-color
+        color: $primary-text-color
+        border-right: 15px solid $primary-color
+        font-size: 1.1em
+        a
+          color: $primary-text-color
 
   .sidebar-footer
     height: auto
     text-align: center
     padding: 10px
     padding-bottom: 20px
-    background: $primary-color-dark
+    background: $primary-color
+    a
+      color: $primary-color-text
 
   a
-    color: white
-
     &:hover
       text-decoration: none
+
+.user-details
+  display: flex
+  flex-direction: column
+
+  .sidebar-profile-image
+    padding: 10px
+    width: 150px
+    height: 150px
+    border-radius: 50%
+    margin: auto
+
+  .sidebar-profile-name
+    color: $primary-color
+
