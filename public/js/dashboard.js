@@ -284,29 +284,15 @@ function drawTopFiveSpends(divId) {
       }
 }
 
-function drawSixMonthSpends(divId) {
-	let response = [{
-  	year: 2017,
-  	month: 10,
-  	sum: 2130
-  },
-  {
-  	year: 2017,
-  	month: 8,
-  	sum: 213
-  },
-  {
-  	year: 2017,
-  	month: 5,
-  	sum: 3000
-  }];
-  let compArr = getLastSixConsecutiveMonths();
-  insertSumWithZero(response,compArr);
+function drawSixMonthSpends(divId,res) {
+	let response = res;
+ 	compArr = getLastSixConsecutiveMonths();
+ 	insertSumWithZero(response,compArr);
 
-  // Set a callback to run when the Google Visualization API is loaded.
-  google.charts.setOnLoadCallback(drawColumnChart);
+  	// Set a callback to run when the Google Visualization API is loaded.
+  	google.charts.setOnLoadCallback(drawColumnChart);
 
-  function drawColumnChart() {
+  	function drawColumnChart() {
   		//making dataArray
       	let dataArr = [
       			['Month','Amount',{role: 'annotation'}],
