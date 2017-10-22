@@ -326,27 +326,8 @@ function drawSixMonthSpends(divId) {
 
 }
 
-function drawThisMonthSpends(divId) {
-	let res = [{
-	  	day: 1,
-	  	month: 4,
-	  	sum: 45
-	  },
-	  {
-	  	day: 2,
-	  	month: 4,
-	  	sum: 546
-	  },
-	  {
-	  	day: 3,
-	  	month: 4,
-	  	sum: 454
-	  },
-	  {
-	  	day: 6,
-	  	month: 4,
-	  	sum: 545
-	  }];
+function drawThisMonthSpends(divId,response) {
+	let res = response;
 
 	  // Set a callback to run when the Google Visualization API is loaded.
   	  google.charts.setOnLoadCallback(drawLineChart);
@@ -372,15 +353,6 @@ function drawThisMonthSpends(divId) {
 $(function () {
 	$('.expense-icons.fa-pencil').click(editExpense);
 	$('.expense-icons.fa-trash').click(deleteExpense);
-	drawCategoryPieChart('pieChart_div');
-	drawTopFiveSpends('barChart_div');
-	drawSixMonthSpends('colChart_div');
-	drawThisMonthSpends('lineChart_div');
 	$('#add-expense').click(addExpense);	
-	$(window).resize(function(event) {
-		drawCategoryPieChart('pieChart_div');
-		drawTopFiveSpends('barChart_div');
-		drawSixMonthSpends('colChart_div');
-		drawThisMonthSpends('lineChart_div');
-	});
+	
 })

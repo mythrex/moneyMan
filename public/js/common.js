@@ -38,8 +38,8 @@ function smallModal(color,icon,body,footer) {
 	}
 }
 
-function getValDropdown(dropdown){
-	let str = $(dropdown).text();
+function getValDropdown(dropdownId){
+	let str = $(dropdownId).text();
 	return str.substr(1,str.length-2)
 }
 

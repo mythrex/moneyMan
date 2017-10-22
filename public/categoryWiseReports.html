@@ -23,6 +23,14 @@
     <script src="/js/plugins/bootstrap-datepicker.js" charset="utf-8"></script>
     <script src="/js/plugins/bootstrap-switch.js" charset="utf-8"></script>
     <script src="/js/now-ui-kit.js" charset="utf-8"></script>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+    </script>
   </head>
   <body>
     <!-- Modal Core -->
@@ -114,8 +122,8 @@
                     </a>
                   </li>
                   <li class="active">
-                    <a href="weeklyReports.html">
-                      <p>Weekly Reports</p>
+                    <a href="categoryWiseReports.html">
+                      <p>Category wise Reports</p>
                     </a>
                   </li>
 
@@ -129,22 +137,86 @@
             <div class="content">
 
               <div class="container-fluid">
+                <div class="row">
+                  <div class="dropdown">
+					                <a href="#" class="btn btn-default btn-simple dropdown-toggle" data-toggle="dropdown" id="expenseCategory"><span class="expense-category" data-category="Bill"></span> Bill</a>
+					                </a>
+					                <ul class="dropdown-menu" aria-labelledby="expenseCategory">
+					                    <a class="dropdown-item" href="#"><span class="expense-category" data-category="Bill"></span> Bill</a>
+					                    <a class="dropdown-item" href="#"><span class="expense-category" data-category="Borrow"></span> Borrow</a>
+					                    <a class="dropdown-item" href="#"><span class="expense-category" data-category="EMI"></span> EMI</a>
+					                    <a class="dropdown-item" href="#"><span class="expense-category" data-category="Entertainment"></span> Entertainment</a>
+					                    <a class="dropdown-item" href="#"><span class="expense-category" data-category="Food & Drinks"></span> Food & Drinks</a>
+					                    <a class="dropdown-item" href="#"><span class="expense-category" data-category="Fuel"></span> Fuel</a>
+					                    <a class="dropdown-item" href="#"><span class="expense-category" data-category="Groceries"></span> Groceries</a>
+					                    <a class="dropdown-item" href="#"><span class="expense-category" data-category="Health"></span> Health</a>
+					                    <a class="dropdown-item" href="#"><span class="expense-category" data-category="Investment"></span> Investment</a>
+					                    <a class="dropdown-item" href="#"><span class="expense-category" data-category="Shopping"></span> Shopping</a>
+					                    <a class="dropdown-item" href="#"><span class="expense-category" data-category="Transfer"></span> Transfer</a>
+					                    <a class="dropdown-item" href="#"><span class="expense-category" data-category="Travel"></span> Travel</a>
+					                    <a class="dropdown-item" href="#"><span class="expense-category" data-category="Other"></span> Other</a>
 
+					                </ul>
+					            </div>
+					           <button class="btn btn-primary" type="button" id="searchByCategory"><span class="fa fa-search"></span> Search By this category</button>
+                </div>
+                <div class="row">
+
+                  <div class="col-md-12 col-lg-6">
+                    <div class="card">
+                      <div class="card-header" id="categoryReportsHeader">
+                        <span>Showing for <span class="expense-category" data-category="Bill"> Bill</span> </span>
+                      </div>
+                      <div class="card-body" id="colChart_div">
+                        
+      
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="col-md-12 col-lg-6">
+                    <div class="card">
+                      <div class="card-header">Expenses</div>
+                      <div class="card-body">
+                        <ul class="expense-list">
+                                <li class="expense-item" data-expense="false" data-id="1">
+                                  <div class="col-12">
+                                    <span data-category="Bill" class="fa fa-star expense-category"></span>
+                                    <span class="expense-name">ABC</span>
+                                    <span data-toggle="tooltip" data-placement="top" title="edit this expense" class="fa fa-pencil expense-icons"></span>
+                                    <span data-toggle="tooltip" data-placement="top" title="remove this expense" class="fa fa-trash expense-icons"></span>
+                                  </div>
+                                  <div class="col-12">
+                                    <span class="expense-desc text-muted">Description</span> 
+                                    <span class="fa fa-inr expense-amount">452</span>
+                                  </div>
+                                  <div class="col-12 expense-item-footer">
+                                    <p class="text-muted expense-date">
+                                      19-04-2017
+                                    </p>
+                                  </div>                                  
+                                </li><!--expense-list-item-->                      
+                          </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                </div><!-- /.row -->
                   
 
   
               
-          </div>
-          
-  
-
-    </div><!--content-->
+              </div>
+      
+             </div><!--content-->
   </div>
 </div>
   </body>
   
   <script src="/js/common.js" charset="utf-8"></script>
   <script src="/js/dashboard.js"></script>
+  <script src="/js/categorywise.js"></script>
   <script>
     $('[data-toggle="tooltip"]').tooltip();
   </script>
