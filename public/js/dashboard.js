@@ -1,3 +1,5 @@
+let MOY = ['Jan','Feb','March','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
 function editExpense(event) {
 	let id = $(event.target).parent().parent().attr('data-id');
 	let date = new Date();
@@ -111,7 +113,7 @@ function editExpense(event) {
 	});
 }
 
-function deleteExpense(evemt) {
+function deleteExpense(event) {
 	let id = +$(event.target).parent().parent().data('id');
 	let myModal = $('#mySmallModal');
 	console.log(id);
@@ -153,9 +155,8 @@ function addExpense(event) {
 							</div><!--col-6-->
 							
 							<div class="col-6">
-								<div class="input-group">
-									<div class="input-group-addon"><span class="fa fa-user"></span></div>
-									<input type="text" class="form-control" placeholder="User Name"/>
+								<div class="form-group">
+									<input type="text" class="form-control" placeholder="Expense Name"/>
 								</div>
 							</div><!--col-6-->
 
@@ -228,8 +229,158 @@ function addExpense(event) {
 	});
 }
 
+function drawCategoryPieChart(divId) {
+	// Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawPieChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawPieChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['Mushrooms', 3],
+          ['Onions', 5],
+          ['Olives', 1],
+          ['Zucchini', 1],
+          ['Pepperoni', 2]
+        ]);
+
+        // Set chart options
+        var options = {'title':'How Much Pizza I Ate Last Night',
+                       'width': 'inherit',
+                       'height': 'inherit'};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById(divId));
+        chart.draw(data, options);
+      }
+}
+
+function drawTopFiveSpends(divId) {
+	// Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawBarChart);
+
+      function drawBarChart() {
+      	
+      	//create data
+      	var data = google.visualization.arrayToDataTable([
+      			['Expense','Amount',{role: 'style'},{role: 'annotation'}],
+      			['Eggs',2786,'#1b9aaa','2786'],
+      			['Protein',950,'#1b9aaa','950'],
+      			['Pedigree',800,'#1b9aaa','800'],
+      			['Sheegul',250,'#1b9aaa','250'],
+
+      		]);
+      	var options = {'title':'Top 5 Spends',
+                       'width':'inherit',
+                       'height': 'inherit'};
+        var chart = new google.visualization.BarChart(document.getElementById(divId));
+        chart.draw(data, options);
+      }
+}
+
+function drawSixMonthSpends(divId) {
+	let response = [{
+  	year: 2017,
+  	month: 10,
+  	sum: 2130
+  },
+  {
+  	year: 2017,
+  	month: 8,
+  	sum: 213
+  },
+  {
+  	year: 2017,
+  	month: 5,
+  	sum: 3000
+  }];
+  let compArr = getLastSixConsecutiveMonths();
+  insertSumWithZero(response,compArr);
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.charts.setOnLoadCallback(drawColumnChart);
+
+  function drawColumnChart() {
+  		//making dataArray
+      	let dataArr = [
+      			['Month','Amount',{role: 'annotation'}],
+      		];
+      	for(var i = 0; i < compArr.length; i++){
+      		dataArr.push([MOY[compArr[i].month - 1] , compArr[i].sum, ''+compArr[i].sum]);
+      	}
+      	console.log(dataArr);
+      	var data = google.visualization.arrayToDataTable(dataArr);
+
+      	var options = {'title':'Last Six Months Spends',
+                       'width':'inherit',
+                       'height': 'inherit'};
+        var chart = new google.visualization.ColumnChart(document.getElementById(divId));
+        chart.draw(data, options);
+      };
+
+}
+
+function drawThisMonthSpends(divId) {
+	let res = [{
+	  	day: 1,
+	  	month: 4,
+	  	sum: 45
+	  },
+	  {
+	  	day: 2,
+	  	month: 4,
+	  	sum: 546
+	  },
+	  {
+	  	day: 3,
+	  	month: 4,
+	  	sum: 454
+	  },
+	  {
+	  	day: 6,
+	  	month: 4,
+	  	sum: 545
+	  }];
+
+	  // Set a callback to run when the Google Visualization API is loaded.
+  	  google.charts.setOnLoadCallback(drawLineChart);
+
+  	  function drawLineChart() {
+  	  	//making dataArray
+      	let dataArr = [['day','Amount']];
+      	for(var i = 0; i < res.length; i++){
+      		dataArr.push([res[i].day , res[i].sum]);
+      	}
+
+      	var data = google.visualization.arrayToDataTable(dataArr);
+
+      	var options = {'title':'This Month Spends',
+                       'width':'inherit',
+                       'height': 'inherit'};
+        var chart = new google.visualization.LineChart(document.getElementById(divId));
+        chart.draw(data, options);
+
+  	  }
+}
+
 $(function () {
 	$('.expense-icons.fa-pencil').click(editExpense);
 	$('.expense-icons.fa-trash').click(deleteExpense);
-	$('#add-expense').click(addExpense);
+	drawCategoryPieChart('pieChart_div');
+	drawTopFiveSpends('barChart_div');
+	drawSixMonthSpends('colChart_div');
+	drawThisMonthSpends('lineChart_div');
+	$('#add-expense').click(addExpense);	
+	$(window).resize(function(event) {
+		drawCategoryPieChart('pieChart_div');
+		drawTopFiveSpends('barChart_div');
+		drawSixMonthSpends('colChart_div');
+		drawThisMonthSpends('lineChart_div');
+	});
 })
