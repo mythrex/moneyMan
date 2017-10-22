@@ -17,6 +17,18 @@ router.get('/signIn',(req,res)=>{
 	res.render('signin')
 });
 
+router.get('/dashboard',(req,res)=>{
+	res.render('reports',{
+		layout: 'dashboard.hbs'
+	})
+});
+
+router.get('/dashboard/categoryWiseReports',(req,res)=>{
+	res.render('categoryWiseReports',{
+		layout: 'dashboard.hbs'
+	})
+});
+
 router.get('/auth/facebook',passport.authenticate('facebook',{scope: 'email'}));
 
 router.get('/auth/facebook/callback',passport.authenticate('facebook',{

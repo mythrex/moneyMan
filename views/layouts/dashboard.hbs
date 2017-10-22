@@ -31,6 +31,64 @@
       google.charts.load('current', {'packages':['corechart']});
 
     </script>
+    <script src="/js/common.js" charset="utf-8"></script>
+    <script src="/js/dashboard.js"></script>
+    <script>
+      $('[data-toggle="tooltip"]').tooltip();
+    </script>
+    <script type="javascript">
+      $(".dropdown-menu .dropdown-item").click(function(){
+        var selText = $(this).html();
+        $(this).parent().parent().find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
+      });
+    </script>
+    <script>
+      $('.date-picker').each(function(){
+            $(this).datepicker({
+                templates:{
+                    leftArrow: '<i class="now-ui-icons arrows-1_minimal-left"></i>',
+                    rightArrow: '<i class="now-ui-icons arrows-1_minimal-right"></i>'
+                }
+            }).on('show', function() {
+                    $('.datepicker').addClass('open');
+
+                    datepicker_color = $(this).data('datepicker-color');
+                    if( datepicker_color.length != 0){
+                        $('.datepicker').addClass('datepicker-'+ datepicker_color +'');
+                    }
+                }).on('hide', function() {
+                    $('.datepicker').removeClass('open');
+                });
+        });
+    </script>
+    <script>
+        $(".dropdown-menu .dropdown-item").click(function(){
+          var selText = $(this).html();
+          $(this).parent().parent().find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
+        });
+
+        $('.date-picker').each(function(){
+            $(this).datepicker({
+                templates:{
+                    leftArrow: '<i class="now-ui-icons arrows-1_minimal-left"></i>',
+                    rightArrow: '<i class="now-ui-icons arrows-1_minimal-right"></i>'
+                }
+            }).on('show', function() {
+                    $('.datepicker').addClass('open');
+
+                    datepicker_color = $(this).data('datepicker-color');
+                    if( datepicker_color.length != 0){
+                        $('.datepicker').addClass('datepicker-'+ datepicker_color +'');
+                    }
+                }).on('hide', function() {
+                    $('.datepicker').removeClass('open');
+                });
+        });
+    </script>
+    <script>
+      $(".bootstrap-switch").bootstrapSwitch();
+    </script>
+
   </head>
   <body>
     <!-- Modal Core -->
@@ -91,8 +149,8 @@
             <div class="collapse navbar-collapse justify-content-end" id="navigation">
               <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/login-page">
-                            <span class="fa fa-sign-in"> </span> Login
+                        <a class="nav-link" href="/signin">
+                            <span class="fa fa-sign-in"> </span> Sign In
                         </a>
                     </li>
                     <li class="nav-item active">
@@ -117,12 +175,12 @@
 
                 <ul class="nav">
                   <li class="active">
-                    <a href="dashboard.html">
+                    <a href="/dashboard">
                       <p>Dashboard</p>
                     </a>
                   </li>
                   <li>
-                    <a href="categoryWiseReports.html">
+                    <a href="/dashboard/categoryWiseReports">
                       <p>Category wise Reports</p>
                     </a>
                   </li>
@@ -137,74 +195,11 @@
             <div class="content">
 
               <div class="container-fluid">
-
-                 
-
+                  {{{body}}}
+              </div><!-- container-fluid -->
+            </div><!--content-->
+          </div><!--main-panel-->
+  </div><!--wrapper-->
   
-              
-          </div>
-          
-  
-
-    </div>
   </body>
-  
-  <script src="/js/common.js" charset="utf-8"></script>
-  <script src="/js/dashboard.js"></script>
-  <script src="/js/reports.js"></script>
-  <script>
-    $('[data-toggle="tooltip"]').tooltip();
-  </script>
-  <script type="javascript">
-    $(".dropdown-menu .dropdown-item").click(function(){
-      var selText = $(this).html();
-      $(this).parent().parent().find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
-    });
-  </script>
-  <script>
-    $('.date-picker').each(function(){
-            $(this).datepicker({
-                templates:{
-                    leftArrow: '<i class="now-ui-icons arrows-1_minimal-left"></i>',
-                    rightArrow: '<i class="now-ui-icons arrows-1_minimal-right"></i>'
-                }
-            }).on('show', function() {
-                    $('.datepicker').addClass('open');
-
-                    datepicker_color = $(this).data('datepicker-color');
-                    if( datepicker_color.length != 0){
-                        $('.datepicker').addClass('datepicker-'+ datepicker_color +'');
-                    }
-                }).on('hide', function() {
-                    $('.datepicker').removeClass('open');
-                });
-        });
-  </script>
-  <script>
-        $(".dropdown-menu .dropdown-item").click(function(){
-          var selText = $(this).html();
-          $(this).parent().parent().find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
-        });
-
-        $('.date-picker').each(function(){
-            $(this).datepicker({
-                templates:{
-                    leftArrow: '<i class="now-ui-icons arrows-1_minimal-left"></i>',
-                    rightArrow: '<i class="now-ui-icons arrows-1_minimal-right"></i>'
-                }
-            }).on('show', function() {
-                    $('.datepicker').addClass('open');
-
-                    datepicker_color = $(this).data('datepicker-color');
-                    if( datepicker_color.length != 0){
-                        $('.datepicker').addClass('datepicker-'+ datepicker_color +'');
-                    }
-                }).on('hide', function() {
-                    $('.datepicker').removeClass('open');
-                });
-        });
-    </script>
-  <script>
-      $(".bootstrap-switch").bootstrapSwitch();
-  </script>
 </html>

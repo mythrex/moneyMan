@@ -1,0 +1,123 @@
+ <div class="row">
+
+
+
+ </div><!--row-->
+
+ <div class="row">
+
+  <div class="col-md-12 col-lg-6">
+    <div class="card">
+      <div class="card-body" id="colChart_div">
+
+      </div>
+    </div>
+  </div><!--col-12-->
+
+  <div class="col-md-12 col-lg-6">
+    <div class="card">
+      <div class="card-body" id="lineChart_div">
+
+      </div>
+    </div>
+  </div><!--col-12-->
+
+</div><!-- /.row -->
+
+
+<div class="row">
+
+  <div class="col-md-12 col-lg-5">
+    <div class="card">
+      <div class="card-header">
+        Recent Spends
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <button class="pull-right btn btn-primary btn-icon  btn-icon-mini btn-round" id="add-expense" data-toggle="tooltip" data-placement="top" title="Add an expense">
+              <i class="fa fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <!--expenses-->
+        <div class="row">
+
+          <div class="col-12">
+            <ul class="expense-list">
+
+              <li class="expense-item" data-expense="false" data-id="1">
+                <div class="col-12">
+                  <span data-category="Bill" class="fa fa-star expense-category"></span>
+                  <span class="expense-name">ABC</span>
+                  <span data-toggle="tooltip" data-placement="top" title="edit this expense" class="fa fa-pencil expense-icons"></span>
+                  <span data-toggle="tooltip" data-placement="top" title="remove this expense" class="fa fa-trash expense-icons"></span>
+                </div>
+                <div class="col-12">
+                  <span class="expense-desc text-muted">Description</span> 
+                  <span class="fa fa-inr expense-amount">452</span>
+                </div>
+                <div class="col-12 expense-item-footer">
+                  <p class="text-muted expense-date">
+                    19-04-2017
+                  </p>
+                </div>                                  
+              </li><!--expense-list-item-->
+            </ul>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /col-md-12 -->
+
+  <div class="col-md-12 col-lg-7">
+    <div class="row">
+      <div class="col-md-12 col-lg-6">
+        <div class="card">
+          <div class="card-header card-inverse bg-primary">Pie Chart</div>
+          <div class="card-body" >
+            <div id="pieChart_div"></div>
+          </div>
+        </div>
+      </div><!--col-12-->
+
+      <div class="col-md-12 col-lg-6">
+        <div class="card">
+          <div class="card-header card-inverse bg-warning">Top Five</div>
+          <div class="card-body" id="barChart_div">
+
+          </div>
+        </div>
+      </div><!--col-12-->
+
+      <div class="col-12 col-sm-6">
+        <div class="card">
+          <div class="card-header card-inverse bg-info">This Month</div>
+          <div class="card-body">
+            <p class="text-muted">Spends</p>
+            <h2><span class="fa fa-inr text-danger"> 2012</span></h2>
+            <p class="text-muted">has been spent this month.</p>
+          </div>
+        </div>
+      </div><!--col-12-->
+
+
+      <div class="col-12 col-sm-6">
+        <div class="card">
+          <div class="card-header card-inverse bg-primary">Total Expense</div>
+          <div class="card-body">
+            <h2><span class="fa fa-inr text-primary"> 345005</span></h2>
+            <p class="text-muted">has been spent till Now.</p>
+          </div>
+        </div>
+      </div><!--col-12-->
+
+    </div><!-- /.row -->
+
+  </div>
+</div>
+
+<script src="/js/reports.js"></script>
