@@ -7,6 +7,7 @@ const bp = require('body-parser');
 const cp = require('cookie-parser');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
+var flash = require('connect-flash');
 //local config files
 const db = require('./config/db.js');
 const passport = require('./config/passport.js');
@@ -29,10 +30,14 @@ app.use(session({
 		conString : 'pg://' + process.env.DB_USER + ':' + process.env.DB_PASS + '@' + process.env.DB_HOST + '/' + process.env.DB_DB,
 	}),
 	secret: process.env.SESSION_SECRET,
-	resave: false,
-	saveUninitialized: false,
+	resave: true,
+	saveUninitialized: true,
 	cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
 }));
+
+//for flash-messeges
+app.use(flash());
+
 //passport
 app.use(passport.initialize());
 app.use(passport.session());
@@ -51,8 +56,11 @@ app.set('views','views');
 app.use(login,categories,expense);
 
 app.get('/logouts', function(req, res){
-  req.logout();
-  res.redirect(200,'/signin');
+	console.log('**logging out**');
+  req.session.destroy(function (err) {
+  	console.log('**destroyed session**');
+    res.redirect('/signin'); //Inside a callback… bulletproof!
+  });
 });
 
 app.listen(port, function () {

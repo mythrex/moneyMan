@@ -28,6 +28,7 @@ let FacebookStrategy = new facebookStrategy({
 	callbackURL: 'http://localhost:3000/auth/facebook/callback',
 	profileFields: ['id', 'displayName', 'email']
 },(accessToken, refreshToken, profile, done)=>{
+	console.log('**FacebookStrategy**');
 	OAUTH.findOrCreate({
 		where: {
 			network_id: profile.id

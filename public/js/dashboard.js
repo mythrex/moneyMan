@@ -1,23 +1,41 @@
 let MOY = ['Jan','Feb','March','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
+function editExpenseBtn(event) {
+	let s = $('#editExpense').serialize();
+	let id = $('#editExpense').data('id');
+	let category = getValDropdown('#editExpenseCategory');
+	s = s + '+&category=' + category;
+	s = unescape(s);
+	//some DB stuff
+	$.ajax({
+		url: '/u/expenses/'+id+'?'+s,
+		type: 'PUT',
+		success: function(result) {
+			if (result.success) {
+				refreshPage();
+				$('#myModal').modal('hide');
+			}
+		}
+	});		
+}
+
 function editExpense(event) {
 	let id = $(event.target).parent().parent().attr('data-id');
 	let date = new Date();
-	let datestr =  date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear();
+	let datestr =   date.getFullYear()+ '/' +(date.getMonth()+1) + '/' + date.getDate();
 	let name = $(event.target).parent().find('.expense-name').text();
 	let desc = $(event.target).parent().parent().find('.expense-desc').text();
 	let amount = $(event.target).parent().parent().find('.expense-amount').text();
 	let category = $(event.target).parent().find('.expense-category').attr('data-category');
-	// console.log(expense);
+	let expense = $(event.target).parent().parent().data('expense');
+	
 
-	let body = `<form id="editExpense">
+	let body = `<form id="editExpense" data-id="${id}">
 					<div class="form group">
 						<div class="row">
 							<div class="col-6">
 								<div class="dropdown">
-					                <a href="#" class="btn btn-default btn-simple dropdown-toggle" data-toggle="dropdown" id="editExpenseCategory">
-					                  <span class="expense-category" data-category="${category}"> ${category}</span>
-					                </a>
+					                <a href="#" class="btn btn-default btn-simple dropdown-toggle" data-toggle="dropdown" id="editExpenseCategory"><span class="expense-category" data-category="${category}"> ${category}</span> </a>
 					                <ul class="dropdown-menu" aria-labelledby="editExpenseCategory">
 					                    <a class="dropdown-item" href="#"><span class="expense-category" data-category="Bill"></span> Bill</a>
 					                    <a class="dropdown-item" href="#"><span class="expense-category" data-category="Borrow"></span> Borrow</a>
@@ -40,34 +58,34 @@ function editExpense(event) {
 							<div class="col-6">
 								<div class="input-group">
 									<div class="input-group-addon"><span class="fa fa-user"></span></div>
-									<input type="text" class="form-control" placeholder="User Name" value="${name}"/>
+									<input name="name" type="text" class="form-control" placeholder="Expense Name" value="${name}"/>
 								</div>
 							</div><!--col-6-->
 
 							<div class="col-12">
 								<div class="input-group">
 									<span class="input-group-addon fa fa-sticky-note-o"></span>
-									<input type="text" class="form-control" placeholder="Type some description here...." value="${desc}"/>
+									<input name="desc" type="text" class="form-control" placeholder="Type some description here...." value="${desc}"/>
 								</div>
 							</div>
 
 							<div class="col-4">
 								<div class="input-group">
 									<span class="input-group-addon fa fa-inr"></span>
-									<input type="number" class="form-control" placeholder="Amount" value="${amount}"/>
+									<input name="amount" type="number" class="form-control" placeholder="Amount" value="${amount}"/>
 								</div>
 							</div>
 
 							<div class="col-4">
 								<div class="input-group">
-									<input type="text" class="form-control date-picker" placeholder="Date" value="${datestr}" data-datepicker-color=''/>
+									<input name="date" type="text" class="form-control date-picker" placeholder="Date" value="${datestr}" data-datepicker-color=''/>
 									<div class="input-group-addon fa fa-calendar text-primary"></div>
 								</div>
 							</div>
 							
 							<div class="col-4">
 								<label for="expense-checkbox">Expense: </label>
-								<input id="expense-checkbox" type="checkbox" name="checkbox" class="bootstrap-switch"/>
+								<input id="expense-checkbox" type="checkbox" name="expense" class="bootstrap-switch" ${expense ? 'checked':''}/>
 							</div>
 
 						</div>
@@ -100,41 +118,44 @@ function editExpense(event) {
                     $('.datepicker').removeClass('open');
                 });
         });
-    </script>
-		
-
-	`;
-
-	modal(undefined,'Edit Expense:',body,undefined);
+    </script>`;
+    let footer = `<button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary" id="myModalPositive-editExpense">Save</button>`;
+	modal(undefined,'Edit Expense:',body,footer);
+	$('#myModalPositive-editExpense').click(editExpenseBtn);
 	$('#myModal').modal('show');
-	$('#myModalPositive').click(function(event) {
-		//some DB stuff
-		$('#myModal').modal('hide');
-	});
+
 }
 
 function deleteExpense(event) {
 	let id = +$(event.target).parent().parent().data('id');
 	let myModal = $('#mySmallModal');
-	console.log(id);
-	smallModal('danger','<span class="fa fa-trash"></span>','Are you sure you want to delete this expense?');
-	$('#mySmallModalPositive').click(function(event) {
-		//some DB Stuff.
-
-		myModal.modal('hide');
-	});
+	smallModal('danger',`<div id="deleteExpense_modal" data-id=${id}><span class="fa fa-trash"></span></div>`,'Are you sure you want to delete this expense?');
 	myModal.modal('show');	
 }
 
+function addExpenseBtn(event) {
+	let s = $('#addExpense').serialize();
+	let category = getValDropdown('#addExpenseCategory');
+	s = s + '&category=' + category;
+	s = unescape(s);
+	$.post('/u/expenses?'+s, function(data, textStatus, xhr) {
+		if (data.success) {
+			refreshPage();
+			$('#myModal').modal('hide');
+		}
+	});
+}
+
 function addExpense(event) {
-	let body = `<form id="editExpense">
+	let date = new Date();
+	let datestr =   date.getFullYear()+ '/' +(date.getMonth()+1) + '/' + date.getDate();
+	let body = `<form id="addExpense">
 					<div class="form group">
 						<div class="row">
 							<div class="col-6">
 								<div class="dropdown">
-					                <a href="#" class="btn btn-default btn-simple dropdown-toggle" data-toggle="dropdown" id="addExpenseCategory">
-					                  Select a category
-					                </a>
+					                <a href="#" class="btn btn-default btn-simple dropdown-toggle" data-toggle="dropdown" id="addExpenseCategory"><span class="expense-category" data-category="Other"> Other</span> </a>
 					                <ul class="dropdown-menu" aria-labelledby="addExpenseCategory">
 					                    <a class="dropdown-item" href="#"><span class="expense-category" data-category="Bill"></span> Bill</a>
 					                    <a class="dropdown-item" href="#"><span class="expense-category" data-category="Borrow"></span> Borrow</a>
@@ -155,35 +176,36 @@ function addExpense(event) {
 							</div><!--col-6-->
 							
 							<div class="col-6">
-								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Expense Name"/>
+								<div class="input-group">
+									<div class="input-group-addon"><span class="fa fa-user"></span></div>
+									<input name="name" type="text" class="form-control" placeholder="Expense Name"/>
 								</div>
 							</div><!--col-6-->
 
 							<div class="col-12">
 								<div class="input-group">
 									<span class="input-group-addon fa fa-sticky-note-o"></span>
-									<input type="text" class="form-control" placeholder="Type some description here...."/>
+									<input name="desc" type="text" class="form-control" placeholder="Type some description here...."/>
 								</div>
 							</div>
 
 							<div class="col-4">
 								<div class="input-group">
 									<span class="input-group-addon fa fa-inr"></span>
-									<input type="number" class="form-control" placeholder="Amount"/>
+									<input name="amount" type="number" class="form-control" placeholder="Amount"/>
 								</div>
 							</div>
 
 							<div class="col-4">
 								<div class="input-group">
-									<input type="text" class="form-control date-picker" placeholder="Date" data-datepicker-color=''/>
+									<input name="date" type="text" class="form-control date-picker" placeholder="Date" value="${datestr}" data-datepicker-color=''/>
 									<div class="input-group-addon fa fa-calendar text-primary"></div>
 								</div>
 							</div>
 							
 							<div class="col-4">
 								<label for="expense-checkbox">Expense: </label>
-								<input id="expense-checkbox" type="checkbox" name="checkbox" class="bootstrap-switch"/>
+								<input id="expense-checkbox" type="checkbox" name="expense" class="bootstrap-switch" checked/>
 							</div>
 
 						</div>
@@ -216,73 +238,15 @@ function addExpense(event) {
                     $('.datepicker').removeClass('open');
                 });
         });
-    </script>
-	`;
-
+    </script>`;
+	let footer = `<button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary" id="myModalPositive-addExpense">Save</button>`;
 	let myModal = $('#myModal');
-	modal('','Add Expense',body,'');
+	modal('','Add Expense',body,footer);
 	myModal.modal('show');
-	$('#myModalPositive').click(function(event) {
-		//some DB STUFF
-
-		myModal.modal('hide');
-	});
+	$('#myModalPositive-addExpense').click(addExpenseBtn);
 }
 
-function drawCategoryPieChart(divId) {
-	// Set a callback to run when the Google Visualization API is loaded.
-      google.charts.setOnLoadCallback(drawPieChart);
-
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
-      function drawPieChart() {
-
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
-        data.addRows([
-          ['Mushrooms', 3],
-          ['Onions', 5],
-          ['Olives', 1],
-          ['Zucchini', 1],
-          ['Pepperoni', 2]
-        ]);
-
-        // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night',
-                       'width': 'inherit',
-                       'height': 'inherit'};
-
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById(divId));
-        chart.draw(data, options);
-      }
-}
-
-function drawTopFiveSpends(divId) {
-	// Set a callback to run when the Google Visualization API is loaded.
-      google.charts.setOnLoadCallback(drawBarChart);
-
-      function drawBarChart() {
-      	
-      	//create data
-      	var data = google.visualization.arrayToDataTable([
-      			['Expense','Amount',{role: 'style'},{role: 'annotation'}],
-      			['Eggs',2786,'#1b9aaa','2786'],
-      			['Protein',950,'#1b9aaa','950'],
-      			['Pedigree',800,'#1b9aaa','800'],
-      			['Sheegul',250,'#1b9aaa','250'],
-
-      		]);
-      	var options = {'title':'Top 5 Spends',
-                       'width':'inherit',
-                       'height': 'inherit'};
-        var chart = new google.visualization.BarChart(document.getElementById(divId));
-        chart.draw(data, options);
-      }
-}
 
 function drawSixMonthSpends(divId,res) {
 	let response = res;
@@ -300,7 +264,7 @@ function drawSixMonthSpends(divId,res) {
       	for(var i = 0; i < compArr.length; i++){
       		dataArr.push([MOY[compArr[i].month - 1] , compArr[i].sum, ''+compArr[i].sum]);
       	}
-      	console.log(dataArr);
+      	// console.log(dataArr);
       	var data = google.visualization.arrayToDataTable(dataArr);
 
       	var options = {'title':'Last Six Months Spends',
@@ -336,9 +300,32 @@ function drawThisMonthSpends(divId,response) {
   	  }
 }
 
+function displayExpense(ulId,data) {
+	let list = '',tempData;
+	for(expense of data){
+		tempData = `<li class="expense-item" data-expense="${expense.expense}" data-id="${expense.id}">
+                <div class="col-12">
+                  <span class="expense-category" data-category="${expense.category.category}" data-toggle="tooltip" data-placement="top" title="${expense.category.category}"></span>
+                  <span class="expense-name">${expense.name}</span>
+                  <span data-toggle="tooltip" data-placement="top" title="Edit this." class="fa fa-pencil expense-icons"></span>
+                  <span data-toggle="tooltip" data-placement="top" title="Remove this." class="fa fa-trash expense-icons"></span>
+                </div>
+                <div class="col-12">
+                  <span class="expense-desc text-muted">${expense.desc}</span> 
+                  <span class="fa fa-inr expense-amount ${expense.expense ? 'text-danger' : 'text-muted'}">${expense.amount}</span>
+                </div>
+                <div class="col-12 expense-item-footer">
+                  <p class="text-muted expense-date">
+                    ${expense.date}
+                  </p>
+                </div>                                  
+              </li><!--expense-list-item-->`;
+         list = list + tempData;
+	}
+	list = list + `<script> $('[data-toggle="tooltip"]').tooltip();</script>`;
+
+	$(ulId).empty().html(list);
+}
 $(function () {
-	$('.expense-icons.fa-pencil').click(editExpense);
-	$('.expense-icons.fa-trash').click(deleteExpense);
-	$('#add-expense').click(addExpense);	
-	
+	$('#add-expense').click(addExpense);
 })

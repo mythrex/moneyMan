@@ -25,12 +25,6 @@
     <script src="/js/now-ui-kit.js" charset="utf-8"></script>
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-
-      // Load the Visualization API and the corechart package.
-      google.charts.load('current', {'packages':['corechart']});
-
-    </script>
     <script src="/js/common.js" charset="utf-8"></script>
     <script src="/js/dashboard.js"></script>
     <script>
@@ -88,7 +82,6 @@
     <script>
       $(".bootstrap-switch").bootstrapSwitch();
     </script>
-
   </head>
   <body>
     <!-- Modal Core -->
@@ -148,13 +141,16 @@
 
             <div class="collapse navbar-collapse justify-content-end" id="navigation">
               <ul class="navbar-nav">
-                    <li class="nav-item">
+                    {{!-- <li class="nav-item">
                         <a class="nav-link" href="/signin">
                             <span class="fa fa-sign-in"> </span> Sign In
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="nav-item active">
                         <a class="nav-link" href="/dashboard"><span class="fa fa-tachometer"></span> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logouts"><span class="fa fa-sign-out"></span> LogOut</a>
                     </li>
                 </ul>
             </div>
@@ -166,7 +162,11 @@
             <div class="sidebar">
               <div class="sidebar-wrapper">
                 <div class="user-details">
+                  {{#if profileImageUrl}}
+                  <img class="sidebar-profile-image img-fluid" src="{{profileImageUrl}}" alt="Profile Image">
+                  {{else}}
                   <img class="sidebar-profile-image img-fluid" src="http://via.placeholder.com/150x150" alt="Profile Image">
+                  {{/if}}
                   <h4 class="sidebar-profile-name text-center">
                     Hi Shivam Kaushik!
                   </h4>
@@ -174,16 +174,35 @@
 
 
                 <ul class="nav">
-                  <li class="active">
-                    <a href="/dashboard">
-                      <p>Dashboard</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/dashboard/categoryWiseReports">
-                      <p>Category wise Reports</p>
-                    </a>
-                  </li>
+                  {{#if reportsPage}}
+                      <li class="active">
+                        <a href="/dashboard">
+                          <p>Dashboard</p>
+                        </a>
+                      </li>
+                  {{else}}
+                      <li>
+                        <a href="/dashboard">
+                          <p>Dashboard</p>
+                        </a>
+                      </li>
+                  {{/if}}
+
+                  {{!-- {{#if weeklyReportsPage}}
+                      <li class="active">
+                        <a href="/dashboard/categoryWiseReports">
+                          <p>Category wise Reports</p>
+                        </a>
+                      </li>
+                  {{else}}
+                      <li>
+                        <a href="/dashboard/categoryWiseReports">
+                          <p>Category wise Reports</p>
+                        </a>
+                      </li>
+                  {{/if}}
+               --}}
+                  
 
                 </ul>
               </div>
