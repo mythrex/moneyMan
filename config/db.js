@@ -8,7 +8,7 @@ const Sequelize = require('sequelize');
 //   host: process.env.DB_HOST,
 //   operatorsAliases: false
 // });
-const db = new Sequelize(process.env.DB_URL,{
+const db = new Sequelize(process.env.DATABASE_URL,{
   // dialect: 'postgres',
   operatorsAliases: false
 });

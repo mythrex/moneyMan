@@ -27,7 +27,7 @@ app.use(cp(process.env.CP_SECRET));
 //express session
 app.use(session({
 	store: new pgSession({
-		conString : process.env.DB_URL
+		conString : process.env.DATABASE_URL
 	}),
 	secret: process.env.SESSION_SECRET,
 	resave: true,
