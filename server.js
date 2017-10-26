@@ -46,7 +46,6 @@ app.use('/',express.static(__dirname + '/public'));
 //setting up hbs engine
 app.engine('hbs',exphbs.express4({
   layoutsDir: 'views/layouts',
-  partialsDir: 'views/partials',
   defaultLayout: 'views/layouts/main.hbs'
 }))
 app.set('view engine','hbs');
