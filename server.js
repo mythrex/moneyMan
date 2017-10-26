@@ -58,7 +58,7 @@ app.get('/logouts', function(req, res){
 	console.log('**logging out**');
   req.session.destroy(function (err) {
   	console.log('**destroyed session**');
-    res.redirect('/signin'); //Inside a callback… bulletproof!
+    res.redirect('/'); //Inside a callback… bulletproof!
   });
 });
 
