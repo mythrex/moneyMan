@@ -12,7 +12,7 @@ function isLoggedIn (req, res, next) {
   res.redirect('/signin');
 }
 
-router.get('/signin',(req,res)=>{
+router.get('/',(req,res)=>{
 	console.log('***/Signin***');
 	console.log(req.flash('danger'));
 	res.render('signin',{
@@ -40,7 +40,7 @@ router.get('/auth/facebook',passport.authenticate('facebook',{scope: 'email'}));
 
 router.get('/auth/facebook/callback',passport.authenticate('facebook',{
 	successRedirect: '/dashboard',
-	failureRedirect: '/signin'
+	failureRedirect: '/'
 }));
 
 

@@ -4,12 +4,15 @@ function editExpenseBtn(event) {
 	let s = $('#editExpense').serialize();
 	let id = $('#editExpense').data('id');
 	let category = getValDropdown('#editExpenseCategory');
-	s = s + '+&category=' + category;
+	s = s;
 	s = unescape(s);
 	//some DB stuff
 	$.ajax({
 		url: '/u/expenses/'+id+'?'+s,
 		type: 'PUT',
+		data: {
+			category: category
+		},
 		success: function(result) {
 			if (result.success) {
 				refreshPage();
@@ -137,9 +140,9 @@ function deleteExpense(event) {
 function addExpenseBtn(event) {
 	let s = $('#addExpense').serialize();
 	let category = getValDropdown('#addExpenseCategory');
-	s = s + '&category=' + category;
+	s = s;
 	s = unescape(s);
-	$.post('/u/expenses?'+s, function(data, textStatus, xhr) {
+	$.post('/u/expenses?'+s,{category: category},function(data, textStatus, xhr) {
 		if (data.success) {
 			refreshPage();
 			$('#myModal').modal('hide');

@@ -338,7 +338,8 @@ module.exports.createExpense = (req,res)=>{
 	let date = new Date(req.query.date);
 	let amount = +req.query.amount;
 	let expense;
-	console.log(req.query.date,date);
+	let category = req.body.category;
+	// category = category.substr(1,category.length-2);
 	if (req.query.expense == 'on'||'on ' && req.query.expense != undefined) {
 		expense = true;
 	}else{
@@ -346,7 +347,7 @@ module.exports.createExpense = (req,res)=>{
 	}
 	CATEGORIES.find({
 		where: {
-			category: req.query.category
+			category: category
 		}
 	}).then((categoryObj)=>{
 		EXPENSES.create({
@@ -371,7 +372,7 @@ module.exports.createExpense = (req,res)=>{
 module.exports.updateExpense = (req,res)=>{
 	let date = new Date(req.query.date);
 	let amount = +req.query.amount;
-	let expense;
+	let expense,category = req.body.category;
 	if (req.query.expense == 'on'||'on ' && req.query.expense != undefined) {
 		expense = true;
 	}else{
@@ -380,7 +381,7 @@ module.exports.updateExpense = (req,res)=>{
 	console.log(expense,req.query.expense);
 	CATEGORIES.find({
 		where: {
-			category: req.query.category
+			category: category,
 		}
 	}).then((categoryObj)=>{
 		EXPENSES.update({
