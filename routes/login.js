@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('../config/passport.js');
+const USERS = require('../models/users.js');
 
 function isLoggedIn (req, res, next) {
   if (req.isAuthenticated()) { 
@@ -21,13 +22,12 @@ router.get('/',(req,res)=>{
 });
 
 router.get('/dashboard',isLoggedIn,(req,res)=>{
-	console.log('***/dashboard***');
 	res.render('reports',{
-		layout: 'dashboard.hbs',
-		reportsPage: true,
-		profileImageUrl: `http://graph.facebook.com/${req.user.network_id}/picture?type=large`,
-		displayName: req.user.displayName
-	})
+			layout: 'dashboard.hbs',
+			reportsPage: true,
+			profileImageUrl: `http://graph.facebook.com/${req.user.network_id}/picture?type=large`,
+			displayName: req.user.name
+		})	
 });
 
 // router.get('/dashboard/categoryWiseReports',(req,res)=>{
