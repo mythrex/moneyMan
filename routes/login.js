@@ -25,7 +25,8 @@ router.get('/dashboard',isLoggedIn,(req,res)=>{
 	res.render('reports',{
 		layout: 'dashboard.hbs',
 		reportsPage: true,
-		profileImageUrl: `http://graph.facebook.com/${req.user.network_id}/picture?type=large`
+		profileImageUrl: `http://graph.facebook.com/${req.user.network_id}/picture?type=large`,
+		displayName: req.user.displayName
 	})
 });
 
