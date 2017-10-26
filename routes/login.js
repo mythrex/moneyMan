@@ -9,7 +9,7 @@ function isLoggedIn (req, res, next) {
   }
   console.log('*****NotLoggedIn*****');
   req.flash('danger', 'Please Login First!')
-  res.redirect('/signin');
+  res.redirect('/');
 }
 
 router.get('/',(req,res)=>{

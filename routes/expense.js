@@ -7,7 +7,7 @@ function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) { 
       return next();
   }
-  res.redirect('/signin');
+  res.redirect('/');
 }
 
 //function to get expenses by category id,tags,desc,min amount,max amount, date range, specific date
