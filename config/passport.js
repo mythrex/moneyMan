@@ -25,7 +25,7 @@ passport.deserializeUser((id,done)=>{
 let FacebookStrategy = new facebookStrategy({
 	clientID: process.env.FACEBOOK_CLIENT_ID,
 	clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-	callbackURL: 'http://localhost:3000/auth/facebook/callback',
+	callbackURL: 'https://monyman.herokuapp.com/auth/facebook/callback',
 	profileFields: ['id', 'displayName', 'email']
 },(accessToken, refreshToken, profile, done)=>{
 	console.log('**FacebookStrategy**',profile);
